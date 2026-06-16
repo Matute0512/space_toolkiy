@@ -1,0 +1,19 @@
+# Entornos virtuales
+.venv/
+venv/
+env/
+
+# Archivos compilados de Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Logs de mantenimiento
+*.log
+
+# Datos locales (¡Crítico para no saturar GitHub con CSVs de la NASA!)
+data/*
+!data/.gitkeep
+
+# Variables de entorno (si luego usamos APIs)
+.env
