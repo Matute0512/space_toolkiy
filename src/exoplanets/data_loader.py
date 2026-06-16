@@ -38,16 +38,15 @@ class ExoplanetDataLoader:
         """
         if EXOPLANET_CACHE_FILE.exists():
             logger.info(
-                f"Caché encontrado en {EXOPLANET_CACHE_FILE}. Omitiendo descarga de la NASA.")
+                f"Caché encontrado en {EXOPLANET_CACHE_FILE}. Omitiendo descarga de la NASA."
+            )
             return
 
         logger.info(
-            "Iniciando descarga desde el Archivo de Exoplanetas de la NASA. Esto puede tardar unos segundos...")
+            "Iniciando descarga desde el Archivo de Exoplanetas de la NASA. Esto puede tardar unos segundos..."
+        )
 
-        params = {
-            "query": self.query,
-            "format": "csv"
-        }
+        params = {"query": self.query, "format": "csv"}
 
         query_string = urllib.parse.urlencode(params)
         url = f"{NASA_EXOPLANET_TAP_URL}?{query_string}"
@@ -55,18 +54,14 @@ class ExoplanetDataLoader:
         try:
             # Usamos urlretrieve para guardar directamente en nuestro archivo temporal
             urllib.request.urlretrieve(url, EXOPLANET_CACHE_FILE)
-            logger.info(
-                "Descarga completada y guardada en caché exitosamente.")
+            logger.info("Descarga completada y guardada en caché exitosamente.")
 
         except HTTPError as e:
             logger.error(f"Error del servidor de la NASA: {e.code}")
-            raise DataDownloadError(
-                f"La API de la NASA rechazó la conexión: {e}")
+            raise DataDownloadError(f"La API de la NASA rechazó la conexión: {e}")
         except URLError as e:
-            logger.error(
-                f"Fallo de conexión. ¿Hay internet? Detalles: {e.reason}")
-            raise DataDownloadError(
-                "No se pudo conectar a los servidores de la NASA.")
+            logger.error(f"Fallo de conexión. ¿Hay internet? Detalles: {e.reason}")
+            raise DataDownloadError("No se pudo conectar a los servidores de la NASA.")
 
     def load_data(self) -> pd.DataFrame:
         """
@@ -83,11 +78,11 @@ class ExoplanetDataLoader:
             df = pd.read_csv(EXOPLANET_CACHE_FILE)
 
             if df.empty:
-                raise DataValidationError(
-                    "El archivo CSV descargado está vacio.")
+                raise DataValidationError("El archivo CSV descargado está vacio.")
 
             logger.info(
-                f"Datos cargados con éxito: {df.shape[0]} planetas encontrados.")
+                f"Datos cargados con éxito: {df.shape[0]} planetas encontrados."
+            )
             return df
 
         except pd.errors.EmptyDataError:

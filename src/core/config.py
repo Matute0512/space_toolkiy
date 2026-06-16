@@ -16,7 +16,7 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 # Directorio destinado a almacenar archivos CSV O JSON temporales
-DATA_DIR = BASE_DIR/"data"
+DATA_DIR = BASE_DIR / "data"
 
 # Ruta especifica para guardar el caché de los exoplanetas
 EXOPLANET_CACHE_FILE: Path = DATA_DIR / "nasa_exoplanets.csv"
