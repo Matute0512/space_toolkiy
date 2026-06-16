@@ -17,3 +17,4 @@ data/*
 
 # Variables de entorno (si luego usamos APIs)
 .env
+.vscode

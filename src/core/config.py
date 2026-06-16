@@ -19,7 +19,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 DATA_DIR = BASE_DIR/"data"
 
 # Ruta especifica para guardar el caché de los exoplanetas
-EXOPLANET_CHACHE_FILE: Path = DATA_DIR / "nasa_exoplanets.csv"
+EXOPLANET_CACHE_FILE: Path = DATA_DIR / "nasa_exoplanets.csv"
 
 # ==========================================
 # 2. CONFIGURACIÓN DE APIS Y RED
