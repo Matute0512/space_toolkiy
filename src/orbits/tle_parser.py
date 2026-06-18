@@ -38,6 +38,7 @@ class TLEParser:
         # Un TLE válido puede tener 2 líneas (sin nombre) o 3 líneas (con nombre).
         if len(lines) == 2:
             name = "Satélite Desconocido"
+            line1, line2 = lines
         elif len(lines) == 3:
             name, line1, line2 = lines
         else:
