@@ -24,8 +24,7 @@ class PhysicsEngine:
     def __init__(self):
         # Constante gravitacional de la Tierra (mu)
         self.mu = Earth.k.to(u.m**3 / u.s**2).value  # type: ignore
-        logger.info(
-            "PhysicsEngine inicializado. Atrayente principal: La Tierra.")
+        logger.info("PhysicsEngine inicializado. Atrayente principal: La Tierra.")
 
     def solve_kepler(self, M: float, e: float, tol: float = 1e-8) -> float:
         """Resueve la ecuación de Kepler (M = E - e*sin(E)) iterativamente usando Newton-Raphson.
@@ -111,8 +110,7 @@ class PhysicsEngine:
             day_float = float(day_str)
 
             # Creamos la fecha base: 1 de Enero de ese año
-            base_time = Time(f"{full_year}-01-01T00:00:00",
-                             format='isot', scale='utc')
+            base_time = Time(f"{full_year}-01-01T00:00:00", format="isot", scale="utc")
 
             # Le sumamos los días transcurridos (restamos 1 porque el 1 de Enero es el día 1, no el 0)
             epoch = base_time + (day_float - 1) * u.day  # type: ignore
@@ -136,8 +134,7 @@ class PhysicsEngine:
 
         except ValueError as e:
             logger.error("Error parseando los valores numéricos del TLE.")
-            raise OrbitCalculationError(
-                f"Datos TLE corruptos o ilegibles: {e}")
+            raise OrbitCalculationError(f"Datos TLE corruptos o ilegibles: {e}")
         except Exception as e:
             logger.error(f"Fallo en la resolución orbital: {e}")
             raise OrbitCalculationError(f"Cálculo físico fallido: {e}")
