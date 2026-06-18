@@ -7,7 +7,7 @@ matemáticamente los datos extraidos de la NASA utilizando Pandas.
 
 import pandas as pd
 from ..core.logger import get_logger
-from ..core.exceptions import DataValidationError
+from ..core.exceptions import DataValidationError, SpaceToolkitError
 
 # Inicializamos el logger para el analizador
 logger = get_logger(__name__)
@@ -85,3 +85,47 @@ class ExoplanetAnalyzer:
         logger.info(f"Se encontraron {len(candidates)} candidatos potenciales.")
 
         return candidates
+
+    def calculate_esi(self) -> pd.DataFrame:
+        """Calcula el Índice de Similitud con la Tierra (ESI) basándose en el radio y la masa.
+        El ESI se calcula aplicando pesos estándar astronómicos sobre el radio y la masa
+        en relación con los valores terrestres (radio = 1, masa = 1).
+
+        Returns:
+            pd.DataFrame: DataFrame ordenado por ESI de mayor a menor, con columna adicional `esi_score`.
+
+        Raises:
+            SpaceToolkitError: Si el DataFrame no contiene las columnas requeridas o ocurre un error en el cálculo.
+        """
+        logger.info("Calculando índice de Similitud con la Tierra (ESI)...")
+
+        try:
+            # Filtramos planetas que no tengan datos de masa o radio
+            df_calc = self.df.dropna(subset=["pl_rade", "pl_bmasse"]).copy()
+
+            # Pesos estandar astronómicos para interior y superficie
+            w_radius = 0.57
+            w_mass = 1.07
+
+            # Fórmula ESI
+            radius_term = 1 - abs((df_calc["pl_rade"] - 1) / (df_calc["pl_rade"] + 1))
+            mass_term = 1 - abs((df_calc["pl_bmasse"] - 1) / (df_calc["pl_bmasse"] + 1))
+
+            df_calc["esi_score"] = radius_term * mass_term
+
+            # Ordenamos para tener los mejores condidatos arriba
+            df_calc = df_calc.sort_values(by="esi_score", ascending=False)
+
+            logger.info("Cálculo de ESI completado con éxito.")
+            return df_calc
+
+        except KeyError as e:
+            logger.error(
+                "Columnas requeridas no encontradas en el DataFrame.", exc_info=True
+            )
+            raise SpaceToolkitError(
+                f"Faltan columnas necesarias para calcular el ESI: {e}"
+            )
+        except Exception as e:
+            logger.error("Error inesperado durante el cálculo del ESI.", exc_info=True)
+            raise SpaceToolkitError(f"Fallo en el cálculo del ESI: {e}")

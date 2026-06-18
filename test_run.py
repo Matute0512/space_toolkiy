@@ -35,10 +35,14 @@ def main():
         print("📊 Renderizando gráficos de exoplanetas...")
         exo_visualizer = ExoplanetVisualizer()
 
-        print("   -> (1/3) Gráfico de métodos de descubrimiento (Cierra la ventana para continuar)")
+        print(
+            "   -> (1/3) Gráfico de métodos de descubrimiento (Cierra la ventana para continuar)"
+        )
         exo_visualizer.plot_discovery_methods(stats)
 
-        print("   -> (2/3) Gráfico de candidatos Tipo Tierra (Cierra la ventana para continuar)")
+        print(
+            "   -> (2/3) Gráfico de candidatos Tipo Tierra (Cierra la ventana para continuar)"
+        )
         exo_visualizer.plot_mass_vs_radius(candidates)
 
         # =================================================================
@@ -62,10 +66,13 @@ def main():
         orbit_visualizer = OrbitVisualizer()
 
         print(
-            f"   -> (3/3) Mostrando órbita de: {tle_data['name']} (Cierra la ventana para terminar)")
-        orbit_visualizer.plot_2d(orbit, name=tle_data['name'])
+            f"   -> (3/3) Mostrando órbita de: {tle_data['name']} (Cierra la ventana para terminar)"
+        )
+        orbit_visualizer.plot_2d(orbit, name=tle_data["name"])
 
-        print("\n✨ ¡Prueba maestra finalizada con éxito! Todos los sistemas operativos.")
+        print(
+            "\n✨ ¡Prueba maestra finalizada con éxito! Todos los sistemas operativos."
+        )
 
     except SpaceToolkitError as e:
         print(f"\n❌ Error controlado en el toolkit: {e}")
